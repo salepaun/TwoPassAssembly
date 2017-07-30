@@ -1,0 +1,9 @@
+.data
+a: INT R1
+a1: JMP [R4]
+a2: JZ R3,[R4 + 5]
+.text
+INT R1
+b: JMP [R4]
+JZ R7, [R4 + 5]
+INT R7
