@@ -18,19 +18,20 @@ public: // basic operations
 		_table.push_back(symbol);
 	}
 
-	std::shared_ptr<T> find(std::string label)
+	std::shared_ptr<T> find(std::string name)
 	{
 		return *std::find_if(
 			std::begin(_table),
 			std::end(_table),
-			[label](auto symbol)
+			[&](auto entry)
 		{
-			return label == symbol->getLabel();
+			return name == entry->getName();
 		}
 		);
 	}
 
 	std::shared_ptr<T>& operator[] (uint32_t index) { return _table[index]; }
+
 
 public: // foreach
 
@@ -40,6 +41,15 @@ public: // foreach
 	const_iterator end() const { return std::end(_table)._Ptr; }
 
 	std::size_t size() const { return _table.size(); }
+
+	friend std::ostream &operator<<(std::ostream & os, const Table<T>& table)
+	{
+		for (auto &entry : table)
+			os << *entry;
+
+		return os;
+	}
+
 
 private:
 	std::vector<std::shared_ptr<T>> _table;

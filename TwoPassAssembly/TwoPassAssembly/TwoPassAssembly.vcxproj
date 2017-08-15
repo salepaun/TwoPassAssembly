@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClCompile Include="Definition.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math_expression.cpp" />
     <ClCompile Include="Mnemonic.cpp" />
     <ClCompile Include="OperationalCodeTable.cpp" />
+    <ClCompile Include="RelocationEnty.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="util.cpp" />
@@ -30,8 +32,10 @@
   <ItemGroup>
     <ClInclude Include="Definition.h" />
     <ClInclude Include="macros.h" />
+    <ClInclude Include="math_expression.h" />
     <ClInclude Include="Mnemonic.h" />
     <ClInclude Include="OperationalCodeTable.h" />
+    <ClInclude Include="RelocationEnty.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="SectionTable.h" />
     <ClInclude Include="Symbol.h" />

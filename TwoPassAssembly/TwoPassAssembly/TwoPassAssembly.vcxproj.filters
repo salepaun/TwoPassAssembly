@@ -36,6 +36,12 @@
     <ClCompile Include="Definition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RelocationEnty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="math_expression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="util.h">
@@ -66,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RelocationEnty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="math_expression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

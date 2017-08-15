@@ -1,6 +1,7 @@
 #include "OperationalCodeTable.h"
 #include "macros.h"
 #include "Mnemonic.h"
+#include "util.h"
 #include <algorithm>
 #include <unordered_map>
 
@@ -18,19 +19,18 @@ std::shared_ptr<Mnemonic> OperationalCodeTable::get(std::string op)
 
 uint8_t OperationalCodeTable::getAddressMode(std::vector<std::string>& instruction)
 {
-	// TODO finish
-	switch (instruction.size())
-	{
-	case 1: // RET
-		return 0;
-	case 2: // INT, JMP, CALL, PUSH, POP
+	auto op = instruction[instruction.size() - 1];
 
-	case 3:
-		break;
-	default:
-		return -1;
-	}
-	return -1;
+	if (std::regex_match(op, util::register_regex))
+		return REGDIR;
+	if (std::regex_match(op, util::regind_regex))
+		return REGIND;
+	if (std::regex_match(op, util::regindpom_regex))
+		return REGINDPOM;
+	if (std::regex_match(op, util::immed_regex))
+		return IMMED;
+
+	return MEMDIR;
 }
 
 uint8_t OperationalCodeTable::getAddressModes(std::string op)
@@ -45,7 +45,7 @@ uint8_t OperationalCodeTable::checkInstruction(std::string op,std::vector<std::s
 
 	auto iterator = std::find(std::begin(line), std::end(line), op);
 
-	auto instruction = std::vector<std::string>(line.size());
+	auto instruction = std::vector<std::string>(line.size() - std::distance(std::begin(line), iterator));
 
 	std::copy(iterator, std::end(line), std::begin(instruction));
 
