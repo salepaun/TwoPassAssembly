@@ -13,7 +13,7 @@ Symbol::Symbol(std::string label, std::shared_ptr<Section> section, uint16_t off
 {
 }
 
-void Symbol::setIndex(uint16_t index)
+void Symbol::setIndex(uint32_t index)
 {
 	_index = index;
 }
@@ -21,6 +21,11 @@ void Symbol::setIndex(uint16_t index)
 void Symbol::setGlobal(bool global)
 {
 	_global = global;
+}
+
+void Symbol::setOffset(uint32_t offset)
+{
+	_offset = offset;
 }
 
 std::string Symbol::getName() const
@@ -33,7 +38,7 @@ std::shared_ptr<Section> Symbol::getSection() const
 	return _section;
 }
 
-uint16_t Symbol::getOffset() const
+uint32_t Symbol::getOffset() const
 {
 	return _offset;
 }
@@ -48,19 +53,25 @@ bool Symbol::isSection() const
 	return _is_section;
 }
 
-uint16_t Symbol::getIndex() const
+bool Symbol::isDefSymbol() const
+{
+	return _def_symbol;
+}
+
+uint32_t Symbol::getIndex() const
 {
 	return _index;
 }
 
 std::string Symbol::to_string() const
 {
-
+	
 	std::stringstream stream;
-	stream << "0x" << std::hex << _offset;
+	stream << "0x" << std::uppercase << std::hex << _offset;
 	std::string value(stream.str());
+	std::string index = _def_symbol ? "-1" : std::to_string(_section->getIndex());
 
-	return "SYM " + std::to_string(_index) + " " + _label + " " + std::to_string(_section->getIndex()) + " " + value + " " + (_global ? "G" : "L");
+	return "SYM " + std::to_string(_index) + " " + _label + " " + index + " " + value + " " + (_global ? "G" : "L");
 }
 
 std::ostream & operator<<(std::ostream & os, const Symbol &symbol)

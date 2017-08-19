@@ -10,21 +10,27 @@ public:
 
 	static std::vector<std::string> tokenizeString(const std::string& str, const std::string& delimiters);
 
-public: // first pass
-
-	static bool firstPass(SYMTAB &symtab, SECTAB &sectab, std::vector<std::vector<std::string>> &instructions);
-
 	static bool readFile(std::string fileName, std::vector<std::vector<std::string>> &instructions);
 
-	static uint16_t handleOrgDirective(std::vector<std::string>& line, SECTAB &sectab);
+	static void writeToFile(std::string fileName);
 
-	static uint32_t defValue(std::vector<std::string>& line, SYMTAB &symtab);
+public: // first pass
+
+	static bool firstPass(std::vector<std::vector<std::string>> &instructions);
+
+	static uint32_t handleOrgDirective(std::vector<std::string> line);
+	
+	static uint32_t handleDupDirective(std::vector<std::string> line, std::shared_ptr<Section> &currentSection);
+
+	static uint32_t defValue(std::vector<std::string> line);
+
+	static uint32_t readValue(std::string value, std::shared_ptr<Section> currentSection = std::shared_ptr<Section>(nullptr));
 
 public: // second pass
 
-	static bool secondPass(SYMTAB &symtab, SECTAB &sectab, std::vector<std::vector<std::string>> &instruction);
+	static bool secondPass(std::vector<std::vector<std::string>> &instruction);
 
-	static void updateGlobalFlag(std::vector<std::string> &line, SYMTAB &symtab);
+	static void updateGlobalFlag(std::vector<std::string> &line);
 
 public: // regex
 

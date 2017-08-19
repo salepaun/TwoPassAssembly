@@ -1,0 +1,56 @@
+ORG 0x0
+.data.1
+DD 0x400
+DD 2 DUP ?
+DD greska
+DD tajmer
+DD tastatura
+DD 26 DUP ?
+regOut: DD 0
+regIn: DD 0
+.data.2
+prvibroj:
+DD 0
+.text.1
+.global greska
+.global tajmer
+.global tastatura
+greska:
+RET
+tajmer:
+RET
+tastatura:
+RET
+.data
+brojelemenata: DD 6
+stepen: DD 2
+niz: DD 2 DUP 1
+DD 2 DUP 2
+DD 2 DUP 3
+.text
+.global START
+START:
+.global petlja
+LOAD R1, #niz ;R1-pokazuje na pocetak niz
+LOAD R2, #4
+SUB R1, R1, R2
+LOAD R2, brojelemenata ;R2-broj elemenata
+LOAD R6, #0
+loop:
+LOAD R3, [R1+4]
+LOAD R4, stepen
+LOAD R5, #1
+petlja:
+MUL R5, R5, R3
+LOAD R7, #1
+SUB R4, R4, R7
+JNZ R4, $petlja
+ADD R6, R6, R5
+LOAD R7, #1
+SUB R2, R2, R7
+LOAD R7, #4
+ADD R1, R1, R7
+JNZ R2, loop
+SUB R0, R0, R0
+INT R0
+.end

@@ -27,6 +27,7 @@
     <ClCompile Include="RelocationEnty.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="Symbol.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="math_expression.h" />
     <ClInclude Include="Mnemonic.h" />
     <ClInclude Include="OperationalCodeTable.h" />
+    <ClInclude Include="RealocTable.h" />
     <ClInclude Include="RelocationEnty.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="SectionTable.h" />

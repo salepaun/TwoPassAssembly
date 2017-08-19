@@ -19,7 +19,11 @@ public: // utill
 	static bool shouldPop(std::string op);
 	static bool isLeftBracketAtTop();
 	static void pushFromStack();
-	static uint32_t calculatePostfix(SYMTAB &symtab);
+	static uint32_t calculatePostfix();
+	static bool isExpression(std::string &word);
+	static bool isHexFormat(std::string &word);
+	static bool isBinary(std::string &word);
+
 public:
 	static std::list<std::pair<std::string,math_type>> _queue;
 	static std::stack<std::pair<std::string, math_type>> _operation_stack;

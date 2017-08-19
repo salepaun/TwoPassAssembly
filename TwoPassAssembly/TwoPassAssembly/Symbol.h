@@ -12,17 +12,19 @@ public:
 
 public: // setters
 
-	void setIndex(uint16_t index);
+	void setIndex(uint32_t index);
 	void setGlobal(bool global);
+	void setOffset(uint32_t offset);
 
 public: // getters
 	
 	std::string getName() const;
 	std::shared_ptr<Section> getSection() const;
-	uint16_t getOffset() const;
+	uint32_t getOffset() const;
 	bool isGlobal() const;
 	bool isSection() const;
-	uint16_t getIndex() const;
+	bool isDefSymbol() const;
+	uint32_t getIndex() const;
 
 	std::string to_string() const;
 
@@ -34,10 +36,10 @@ private: // private member variables
 
 	std::string _label;
 	std::shared_ptr<Section> _section;
-	uint16_t _offset;
+	uint32_t _offset;
 	bool _global;
 	bool _is_section;
 	bool _def_symbol;
-	uint16_t _index;
+	uint32_t _index;
 };
 

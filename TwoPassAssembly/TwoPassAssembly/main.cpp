@@ -1,22 +1,18 @@
 #include "util.h"
 #include "macros.h"
 #include <fstream>
-#include <string>
 #include "OperationalCodeTable.h"
-#include "Table.h"
-#include "SymbolTable.h"
 #include "Section.h"
-#include "Symbol.h"
-#include "SectionTable.h"
-#include "Definition.h"
+
+
 
 // argv[1] = input file
 // argv[2] = output file
 int main(int argc, char* argv[])
 {
-	if (argc != 3) { PRINT("Bad arguments"); }
+	if (argc != 3) { PRINT("Bad arguments");  return -1; }
 
-	//PRINT(std::regex_match("[R0 + a12]", util::regindpom_regex));
+	//PRINT(std::regex_match("$h", util::memdir_regex));
 
 	std::vector<std::vector<std::string>> instructions;
 
@@ -24,17 +20,14 @@ int main(int argc, char* argv[])
 		return -1;
 
 	OPTAB::init();
-	SYMTAB symtab;
-	SECTAB sectab;
 	
-	if (!util::firstPass(symtab, sectab, instructions))
+	if (!util::firstPass(instructions))
 		return -1;
 
-	if (!util::secondPass(symtab, sectab, instructions))
+	if (!util::secondPass(instructions))
 		return -1;
 
-	std::cout << sectab;
-	std::cout << symtab;
-
+	util::writeToFile(argv[2]);
+	PRINT("Successful!");
 	return 0;
 }

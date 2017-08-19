@@ -1,21 +1,31 @@
-.rodata
-msg:
-	DD a
-ORG 0x1
+.data.1
+DD 0x100
+DD 33 DUP ?
+.data
+prvibroj:
+DD 0
 .text
-	.global main
-main:
-	test DEF 12+msg-(2-5*2)
-	PUSH R1
-	LOAD R1,R2
-	CALL getchar
-	JNZ skip
-	PUSH R3
-	CALL printf
-	ADD R1,R1,R1
-skip:
-	LOAD R1, #0
-	LOAD R2, #5
-	POP R1
+.global START
+START:
+SUB R0, R6, R5
+JNZ R0, prva
+JMP druga
+PUSH R0
+POP R1
+druga:
+PUSH R3
+POP R2
+SUB R0, R0, R0
+CALL saberi
+prva:
+INT R0
+.text.2
+saberi:
+LOADSB R0, #255
+ADD R0, R0, R0
+MUL R1, R3, R2
+STOREB R1, prvibroj
+LOAD R0, prvibroj
+SUB R0, R0, R0
+RET
 .end
-	

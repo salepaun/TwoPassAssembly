@@ -44,12 +44,19 @@ public: // foreach
 
 	friend std::ostream &operator<<(std::ostream & os, const Table<T>& table)
 	{
-		for (auto &entry : table)
-			os << *entry;
-
-		return os;
+		return os<<table.to_string();
 	}
 
+	std::string to_string() const
+	{
+		std::string ret = "";
+		for (auto &entry : table)
+			ret+= (*entry).to_string() + "\n";
+
+		return ret;
+	}
+
+	static Table<T> table;
 
 private:
 	std::vector<std::shared_ptr<T>> _table;

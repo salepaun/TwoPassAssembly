@@ -2,25 +2,35 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Table.h"
+
+class RelocationEnty;
 
 class Section
 {
 public:
-	Section(std::string name, uint16_t index, uint16_t locctr = 0);
+	Section(std::string name, uint32_t index, uint32_t locctr = 0, bool org = false);
 
-	void incLocationCounter(uint16_t amount);
+	void incLocationCounter(uint32_t amount);
 	void resetLocationCounter();
 
-	void appendData(std::vector<char> data);
+	void appendData(uint32_t value, uint8_t size, bool firstWord = true);
 	void saveAndResetLocctr();
+
+	void insertRealocationEntry(std::shared_ptr<RelocationEnty> &entry);
 
 public: // getters
 
 	std::string getName() const;
-	uint16_t getLocationCounter() const;
+	uint32_t getLocationCounter() const;
+	uint32_t getBeginLocationCounter() const;
 	std::vector<uint8_t> getData() const;
-	uint16_t getIndex() const;
+	uint32_t getIndex() const;
+	Table<RelocationEnty>& getTable();
+
 	std::string to_string() const;
+	std::string to_string_data() const;
+	std::string to_string_table() const;
 
 public: // operators
 
@@ -28,10 +38,12 @@ public: // operators
 
 private:
 	std::string _name;
-	uint16_t _begin_locctr;
-	uint16_t _locctr;
-	uint16_t _end_locctr;
+	uint32_t _begin_locctr;
+	uint32_t _locctr;
+	uint32_t _end_locctr;
 	std::vector<uint8_t> _data;
-	uint16_t _index;
+	uint32_t _index;
+	std::string _flags;
+	Table<RelocationEnty> _table;
 };
 

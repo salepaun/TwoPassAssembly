@@ -1,0 +1,39 @@
+.data
+	DW 10-2*2
+	c DEF 0b101
+	h: b DEF 2*c+5
+	m: DD 5
+	.global m
+	a: DD a
+	ORG 0x50
+.text
+LOAD R5, h
+LOADUW R2, $h
+LOADSB R7, #m
+LOADUW R5, $m
+x: JLZ R0, $x
+JNZ R0, x
+ADD R1, R2, R3
+PUSH R1
+POP R2
+DD 0x5555
+NOT R6, R7
+STORE PC, [R5+6]
+STOREB R5, m
+LOADUB R3, [R5+a]
+INT R5
+kraj:
+RET
+
+.rodata
+prvalabela: DD 2 DUP 5
+DD 10 DUP 5
+drugalabela:
+DB 7
+podaci:
+DD (drugalabela-prvalabela) DUP 2
+
+.bss.3
+neinicpodaci:
+DD 5 DUP ?
+.end

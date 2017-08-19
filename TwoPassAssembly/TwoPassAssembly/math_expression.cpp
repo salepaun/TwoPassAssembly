@@ -51,14 +51,14 @@ bool math_expression::shouldPop(std::string op)
 	if (_operation_stack.empty()) return false;
 	auto top = _operation_stack.top().first;
 	auto top_priority = 0;
-	for (auto i = 0; i < _op_priorities.size(); ++i)
+	for (uint8_t i = 0; i < _op_priorities.size(); ++i)
 	{
 		if (_op_priorities[i].find(top) != _op_priorities[i].end())
 			top_priority = i;
 	}
 
 	auto op_priority = 0;
-	for (auto i = 0; i < _op_priorities.size(); ++i)
+	for (uint8_t i = 0; i < _op_priorities.size(); ++i)
 	{
 		if (_op_priorities[i].find(op) != _op_priorities[i].end())
 			op_priority = i;
@@ -81,7 +81,7 @@ void math_expression::pushFromStack()
 	math_expression::_queue.push_back(pair);
 }
 
-uint32_t math_expression::calculatePostfix(SYMTAB &symtab)
+uint32_t math_expression::calculatePostfix()
 {
 	auto stack = std::stack<uint32_t>();
 
@@ -97,7 +97,7 @@ uint32_t math_expression::calculatePostfix(SYMTAB &symtab)
 			stack.push(value);
 			break;
 		case math_type::variable:
-			value = symtab.find(elem.first)->getOffset();
+			value = SYMTAB::table.find(elem.first)->getOffset();
 			stack.push(value);
 			break;
 		case math_type::operation:
@@ -120,4 +120,23 @@ uint32_t math_expression::calculatePostfix(SYMTAB &symtab)
 		}
 	}
 	return stack.top();
+}
+
+bool math_expression::isExpression(std::string & word)
+{
+	if (word.find("+") != std::string::npos) return true;
+	if (word.find("-") != std::string::npos) return true;
+	if (word.find("*") != std::string::npos) return true;
+	if (word.find("/") != std::string::npos) return true;
+	return false;
+}
+
+bool math_expression::isHexFormat(std::string & word)
+{
+	return word.substr(0, 2) == "0x";
+}
+
+bool math_expression::isBinary(std::string & word)
+{
+	return word.substr(0, 2) == "0b";
 }

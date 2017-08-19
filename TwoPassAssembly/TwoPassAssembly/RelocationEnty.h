@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
-
-class Section;
+#include <string>
 
 enum class relocation_type { R_386_32, R_386_PC32 };
 
@@ -9,13 +8,16 @@ class RelocationEnty
 {
 public:
 
-	RelocationEnty(std::shared_ptr<Section> section, uint16_t offset, relocation_type type, uint16_t index);
+	RelocationEnty(uint32_t offset, relocation_type type, uint32_t index);
 
+public: // operators
+
+	friend std::ostream& operator<<(std::ostream& os, const RelocationEnty& entry);
+	std::string to_string() const;
 
 private:
-	std::shared_ptr<Section> _section;
-	uint16_t _offset;
+	uint32_t _offset;
 	relocation_type _type;
-	uint16_t _index;
+	uint32_t _index;
 };
 
