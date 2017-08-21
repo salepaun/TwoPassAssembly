@@ -1,0 +1,57 @@
+ORG 0x0
+.data.1
+DD 0x200
+DD 2 DUP ?
+DD greska
+DD tajmer
+DD tastatura
+DD 26 DUP ?
+regOut: DD 0
+regIn: DD 0
+.data.2
+prvibroj:
+DD 0
+.text.1
+.global greska
+.global tajmer
+.global tastatura
+greska:
+LOAD R1, #2
+MUL R15, R15, R1
+RET
+tajmer:
+LOADUB R1, regIn
+STOREB R1, regOut
+RET
+tastatura:
+LOADUB R1, regIn
+LOAD R2, #1
+ADD R1, R1, R2
+STOREB R1, regIn
+RET
+.text
+.global START
+START:
+SUB R0, R6, R5
+JNZ R0, prva
+JMP druga
+PUSH R0
+POP R1
+druga:
+PUSH R3
+POP R2
+SUB R0, R0, R0
+CALL saberi
+prva:
+INT R0
+.text.2
+saberi:
+LOADSB R0, #255
+ADD R0, R0, R0
+MUL R1, R3, R2
+JMP saberi
+STOREB R1, prvibroj
+LOAD R0, prvibroj
+SUB R0, R0, R0
+RET
+.end
